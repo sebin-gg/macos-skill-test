@@ -1,0 +1,197 @@
+--- preview (must change nothing) ---
+PASS: preview lists candidate
+PASS: preview changes nothing
+--- clean ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/stale.log.zst (source preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] mode=clean roots=1 candidates=3 compressed=1 purged=1 skipped=2 failed=0 not_beneficial=1 locked=0
+[zlog] raw=43.0K compressed=44B saved=42.9K
+148K	total
+PASS: compressible archived
+PASS: symlink escape blocked
+PASS: old empty purged
+PASS: fresh empty kept
+PASS: empty transcript protected
+PASS: empty history protected
+PASS: empty conversation protected
+PASS: junk kept
+PASS: high-entropy kept
+PASS: stale artifact not counted
+PASS: jsonl kept
+PASS: transcript kept
+PASS: sqlite-wal kept
+PASS: small kept
+PASS: no tmp leftovers
+PASS: report line present
+--- restore ---
+[zlog] RESTORED: /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/ok.log (archive preserved)
+[zlog] restore: ok=1 failed=0
+PASS: restored
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/ok.log
+[zlog] restore: ok=0 failed=1
+PASS: restore refuses existing dest
+--- deep-preview read-only ---
+PASS: deep-preview changes nothing
+--- collision (existing dest → UNSAFE-SKIP, source preserved) ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/collide.log.zst (source preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/stale.log.zst (source preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/ok.log.zst (source preserved)
+[zlog] mode=clean roots=1 candidates=4 compressed=0 purged=0 skipped=4 failed=0 not_beneficial=1 locked=0
+[zlog] raw=0B compressed=0B saved=0B
+248K	total
+PASS: collision source preserved
+PASS: collision dest untouched
+PASS: collision reported
+PASS: collision no tmp leftovers
+--- TOCTOU (source changed mid-compression → preserved) ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/stale.log.zst (source preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] FAILED (source changed during compression): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/noise.log (original preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] FAILED (source changed during compression): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/race.log (original preserved)
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] UNSAFE-SKIP (destination exists): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/ok.log.zst (source preserved)
+[zlog] mode=clean roots=1 candidates=4 compressed=0 purged=0 skipped=2 failed=2 not_beneficial=0 locked=0
+[zlog] raw=0B compressed=0B saved=0B
+244K	total
+PASS: race source preserved
+PASS: race no archive
+PASS: race reported
+--- tar traversal / mismatch restore refused ---
+[zlog] UNSAFE-SKIP (member mismatch, multi-entry, or destination busy): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/trav.log.tar.gz
+[zlog] FAILED: /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/trav.log.tar.gz (nothing written)
+[zlog] restore: ok=0 failed=1
+PASS: traversal refused
+PASS: traversal no escape
+PASS: traversal no output
+[zlog] UNSAFE-SKIP (member mismatch, multi-entry, or destination busy): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/mismatch.log.tar.gz
+[zlog] FAILED: /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/mismatch.log.tar.gz (nothing written)
+[zlog] restore: ok=0 failed=1
+PASS: mismatch refused
+PASS: mismatch no output
+PASS: malicious archives kept
+--- corrupt archive restore ---
+[zlog] FAILED: /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/corrupt.log.zst (nothing written)
+[zlog] restore: ok=0 failed=1
+PASS: corrupt refused
+PASS: corrupt no output
+PASS: corrupt archive kept
+--- corrupt stream restore leaves no partial output ---
+[zlog] FAILED: /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/corrupt2.log.gz (nothing written)
+[zlog] restore: ok=0 failed=1
+PASS: corrupt gz refused
+PASS: corrupt gz no output
+PASS: corrupt gz no tmp leftovers
+PASS: corrupt gz archive kept
+--- deep scan end-to-end (fake HOME) ---
+PASS: deep-preview lists candidate
+PASS: deep-preview still read-only
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] mode=deep roots=1 candidates=1 compressed=1 purged=0 skipped=0 failed=0 not_beneficial=0 locked=0
+[zlog] raw=43.0K compressed=44B saved=42.9K
+[zlog] Pruned        1 junk/cache dirs (maxdepth 12)
+PASS: deep archived
+PASS: deep report line present
+--- missing compressors (all fail → source preserved) ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] FAILED (compressor error): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/nocomp.log (original preserved)
+[zlog] mode=clean roots=1 candidates=1 compressed=0 purged=0 skipped=0 failed=1 not_beneficial=0 locked=0
+[zlog] raw=0B compressed=0B saved=0B
+248K	total
+PASS: nocomp source preserved
+PASS: nocomp no archive
+--- newline filename ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] mode=clean roots=1 candidates=1 compressed=1 purged=0 skipped=0 failed=0 not_beneficial=0 locked=0
+[zlog] raw=43.0K compressed=44B saved=42.9K
+208K	total
+PASS: newline archived
+PASS: newline no tmp leftovers
+--- leading-dash filename (never lost, whatever tar decides) ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] mode=clean roots=1 candidates=1 compressed=1 purged=0 skipped=0 failed=0 not_beneficial=0 locked=0
+[zlog] raw=43.0K compressed=44B saved=42.9K
+212K	total
+PASS: dash never lost
+PASS: dash no tmp leftovers
+--- hardlinks compress independently ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] mode=clean roots=1 candidates=2 compressed=2 purged=0 skipped=0 failed=0 not_beneficial=0 locked=0
+[zlog] raw=85.9K compressed=88B saved=85.9K
+220K	total
+PASS: hardlinks both handled
+PASS: hardlinks archives exist
+--- permission failure (unreadable source → preserved) ---
+fuser: [-cfu] file ...
+	-c	file is treated as mount point
+	-f	the report is only for the named files
+	-u	print username of pid in parenthesis
+[zlog] FAILED (compressor error): /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/tmp.PTzHc8bHTb/home/.claude/noperm.log (original preserved)
+[zlog] mode=clean roots=1 candidates=1 compressed=0 purged=0 skipped=0 failed=1 not_beneficial=0 locked=0
+[zlog] raw=0B compressed=0B saved=0B
+264K	total
+PASS: noperm preserved
+POSIX TESTS ALL PASS

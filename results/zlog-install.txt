@@ -1,0 +1,25 @@
+--- fresh install ---
+PASS: installed SKILL.md
+PASS: installed scripts/zlog.sh
+PASS: installed scripts/zlog.ps1
+PASS: installed references/agent-paths.md
+PASS: installed references/safety.md
+PASS: installed references/formats.md
+PASS: executable bit
+PASS: frontmatter
+--- upgrade backs up whole previous dir ---
+PASS: backup dir created
+PASS: backup has old content
+PASS: live dir fresh
+PASS: backup is full skill
+--- invalid skill aborts, live untouched ---
+PASS: invalid skill rejected
+PASS: live untouched
+--- publish failure aborts, live intact ---
+PASS: install failed as expected
+PASS: live intact after abort
+PASS: no half-installed stage
+--- promote failure rolls back to previous skill ---
+PASS: install failed as expected
+PASS: rollback restored live skill
+INSTALL TESTS ALL PASS

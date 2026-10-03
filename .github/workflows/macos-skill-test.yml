@@ -1,0 +1,97 @@
+name: macOS Skill Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      interactive:
+        description: "Open a tmate SSH/web shell on the macOS runner"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macos-skill-test
+  cancel-in-progress: false
+
+jobs:
+  skill-test:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System info
+        run: |
+          mkdir -p results
+          {
+            echo "# macOS Skill Test — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo '```'
+            sw_vers
+            uname -a
+            echo "arch: $(uname -m)"
+            echo "xcode: $(xcode-select -p 2>&1)"
+            git --version
+            bash --version | head -1
+            echo '```'
+          } > results/system-info.md
+
+      - name: "Skill suite: zlog POSIX tests"
+        id: posix
+        continue-on-error: true
+        shell: bash
+        run: |
+          git clone --depth 1 https://github.com/sebin-gg/zlog.git "$RUNNER_TEMP/zlog"
+          cd "$RUNNER_TEMP/zlog"
+          bash tests/test-posix.sh 2>&1 | tee "$GITHUB_WORKSPACE/results/zlog-posix.txt"
+
+      - name: "Skill suite: zlog install tests"
+        id: install
+        continue-on-error: true
+        shell: bash
+        run: |
+          cd "$RUNNER_TEMP/zlog"
+          bash tests/test-install.sh 2>&1 | tee "$GITHUB_WORKSPACE/results/zlog-install.txt"
+
+      - name: Interactive tmate session
+        if: ${{ inputs.interactive }}
+        uses: mxschmitt/action-tmate@v3
+        with:
+          detached: true
+
+      - name: Write summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Results"
+            echo
+            echo "| Suite | Outcome |"
+            echo "| --- | --- |"
+            echo "| zlog POSIX | \`${{ steps.posix.outcome }}\` |"
+            echo "| zlog install | \`${{ steps.install.outcome }}\` |"
+          } | tee results/summary.md | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-skill-report
+          path: results/
+
+      - name: Commit results
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p results
+          git add results
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git commit -m "results: macOS skill test $(date -u +%Y-%m-%d) [skip ci]"
+          git push
